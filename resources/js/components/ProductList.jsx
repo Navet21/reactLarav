@@ -15,11 +15,17 @@
         const fetchProducts = async (page) => {
         setLoading(true);
         try {
-            const response = await axios.get(`/api/products?page=${page}&per_page=${perPage}`);
-            const { data, meta } = response.data; // Asumiendo que `meta` contiene los metadatos
-            setProducts(data);
-            setCurrentPage(meta.current_page);
-            setTotalPages(meta.last_page);
+            const response = await fetch(`/api/products?page=${page}&per_page=${perPage}`, {
+                credentials: "include",
+            });
+            if (response.redirected) {
+                window.location.href = response.url;
+                return;
+                }
+            const data = await response.json(); // Asumiendo que `meta` contiene los metadatos
+            setProducts(data.data);
+            setCurrentPage(data.meta.current_page);
+            setTotalPages(data.meta.last_page);
             setLoading(false);
         } catch (err) {
             setError(err.message);
