@@ -21,7 +21,18 @@
         alert("Producto eliminado correctamente");
         setProducts(products.filter(product => product.id !== productId));
         } catch (error) {
-        console.error("Error eliminando el producto:", error);
+            if(error.response){
+                if(error.response.status === 403){
+                    alert("No tienes permisos para eliminar este producto");
+                }
+                else{
+                    alert(`Error: ${error.response.status} - ${error.response.message}`)
+                }
+            }
+            else{
+                alert("Error eliminando el producto")
+            }
+        
         }
         };
 
