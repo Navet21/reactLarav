@@ -18,7 +18,8 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 1, 100),
             'stock' => $this->faker->numberBetween(1, 100),
-            'image' => "https://picsum.photos/200/300?random=" . $this->faker->numberBetween(1, 1000)
+            'image' => "https://picsum.photos/200/300?random=" . $this->faker->numberBetween(1, 1000),
+            'user_id'=> $this->faker->numberBetween(1,10)
         ];
     }
 }

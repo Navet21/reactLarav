@@ -6,9 +6,12 @@ use App\Http\Resources\ProductResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Policies\ProductPolicy;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
-{
+{   
+    
     /**
      * Display a listing of the resource.
      */
@@ -45,8 +48,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(product $product)
     {
-        //
+        Gate::authorize('delete', $product);
+        $product->delete();
+        return response()->json(['message' => 'Producto eliminado correctamente'], 200);
     }
 }
